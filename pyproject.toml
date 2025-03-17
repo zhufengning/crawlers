@@ -1,0 +1,14 @@
+[project]
+name = "crawlers"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4>=4.13.3",
+    "ebooklib>=0.18",
+    "lxml>=5.3.1",
+    "requests>=2.32.3",
+    "tenacity>=9.0.0",
+    "tqdm>=4.67.1",
+]

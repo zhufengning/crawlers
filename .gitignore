@@ -1,0 +1,6 @@
+.venv
+out
+log.txt
+book.json
+__pycache__
+*.epub

@@ -45,11 +45,18 @@ if len(sys.argv) >= 2:
                         break
             if not(flag):
                 continue
-            url = "https://www.mhgui.com" + url
+            url = "https://www.manhuagui.com" + url
             path = "out/" + tp + "/" + title  + "/"
             os.makedirs(path, exist_ok=True)
-            print(title)
-            cha_data = BeautifulSoup(requests.get(url).text, "lxml").find_all("script")[3].text.replace('window["\\x65\\x76\\x61\\x6c"]', "console.log")
+            print(title, url)
+            for j in BeautifulSoup(requests.get(url).text, "lxml").find_all("script"):
+                #print(j)
+                text = j.text
+                symbol = 'window["\\x65\\x76\\x61\\x6c"]'
+                if symbol in text:
+                    cha_data = text.replace(symbol, "console.log")
+                    break
+            #print(cha_data)
             jscmd = """
 var LZString = require("./lz-string.js")
 String.prototype.splic=function(f){return LZString.decompressFromBase64(this).split(f)}
@@ -58,6 +65,7 @@ String.prototype.splic=function(f){return LZString.decompressFromBase64(this).sp
             p = subprocess.Popen("node cmd.js" ,stdout=subprocess.PIPE)
             cmd_res = p.stdout.read().decode(encoding="utf-8")
             os.remove("cmd.js")
+            #print(cmd_res)
             img_json = json.loads(cmd_res[12:-13])
             for v in img_json["files"]:
                 filename = path + unquote(v)
